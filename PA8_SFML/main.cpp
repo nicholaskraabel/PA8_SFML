@@ -7,7 +7,8 @@ int main()
     while(window.isOpen())
     {
       //Stages for go Fish
-        //starts with 
+        //start of game intailizeing deck shuffle dealing 
+        //ends when deck runs out
 
 
 
