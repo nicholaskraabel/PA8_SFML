@@ -8,6 +8,6 @@ void Card::draw(sf::RenderTarget &window, sf::RenderStates state, int locX, int 
 
     window.draw(cardBackground);
 
-
+    // changed here
     
 }
