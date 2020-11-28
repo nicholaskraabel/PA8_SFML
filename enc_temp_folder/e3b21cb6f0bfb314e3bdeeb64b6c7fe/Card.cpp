@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include "Card.h"
-//edited these
 
 int Card::getFaceValue()
 {
