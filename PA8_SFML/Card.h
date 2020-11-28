@@ -1,16 +1,28 @@
-//Name nicholas
+//The Card Class
 #include <SFML/Graphics.hpp>
 #include <string.h>
 
-class Card : public sf::Drawable, sf::Transformable {
+class Card {
 private:
-    sf::RectangleShape cardBackground;
-    char facevalue;
+    sf::RectangleShape card;
+    int facevalue;
     char suit;
     std::string fileIdentifier;
-    sf::Texture texture;
 
 public:
-    virtual void draw(sf::RenderTarget &, sf::RenderStates, int, int); 
+    Card(sf::RectangleShape cb, int fv, char s, std::string fi)
+    {
+        card = cb;
+        facevalue = fv;
+        suit = s;
+        //file tags my need folder tag put in front of it
+        fileIdentifier = "CardTextures\\" + fi;
+    }
+    ~Card()
+    {}
+    int getFaceValue();
+    char getSuit();
+    void draw(sf::RenderTarget &, float, float);
+    bool compare(Card);
 
 };
