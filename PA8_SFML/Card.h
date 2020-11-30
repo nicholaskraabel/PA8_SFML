@@ -31,8 +31,8 @@ public:
     {}
     int getFaceValue();
     char getSuit();
-    void draw(sf::RenderTarget &, float, float);
-    void drawBack(sf::RenderTarget&, float, float);
+    void draw(sf::RenderTarget &, float, float, float);
+    void drawBack(sf::RenderTarget&, float, float, float);
     bool compare(Card);
 
 };

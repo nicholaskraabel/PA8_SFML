@@ -1,6 +1,7 @@
 //This the deck constructor it return the reference of an array of the cards.
 #include "Card.h"
 #include <string>
+#include <stack>
 void deckConstuctor(Card(&deck)[deckSize])
 {
 	std::string suit, fileTag;
@@ -42,4 +43,9 @@ void deckConstuctor(Card(&deck)[deckSize])
 		}
 
 	}
+}
+
+void gameDeck(std::stack <Card>&)
+{
+
 }
