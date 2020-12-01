@@ -1,5 +1,13 @@
+<<<<<<< Updated upstream
 ﻿  main.cpp
 C:\Users\Kraab\source\repos\PA8_SFML\PA8_SFML\Card.h(19,1): warning C4305: '=': truncation from 'int' to 'char'
 C:\Users\Kraab\source\repos\PA8_SFML\PA8_SFML\Card.h(19,16): warning C4309: '=': truncation of constant value
 C:\Users\Kraab\source\repos\PA8_SFML\PA8_SFML\main.cpp(22,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   PA8_SFML.vcxproj -> C:\Users\Kraab\source\repos\PA8_SFML\Debug\PA8_SFML.exe
+=======
+﻿  menu.cpp
+C:\Users\danie\Documents\WSU Fall 2020\CptS 122\PA8_SFML\PA8_SFML\Card.h(19,1): warning C4305: '=': truncation from 'int' to 'char'
+C:\Users\danie\Documents\WSU Fall 2020\CptS 122\PA8_SFML\PA8_SFML\Card.h(19,16): warning C4309: '=': truncation of constant value
+C:\Users\danie\Documents\WSU Fall 2020\CptS 122\PA8_SFML\PA8_SFML\menu.cpp(39): warning C4715: 'menu': not all control paths return a value
+  PA8_SFML.vcxproj -> C:\Users\danie\Documents\WSU Fall 2020\CptS 122\PA8_SFML\Debug\PA8_SFML.exe
+>>>>>>> Stashed changes

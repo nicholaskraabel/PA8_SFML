@@ -148,11 +148,24 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="DeckConstruction.cpp" />
     <ClCompile Include="main.cpp" />
+<<<<<<< Updated upstream
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeckConstruction.h" />
     <ClInclude Include="Player.h" />
+=======
+    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DeckConstruction.h" />
+    <ClInclude Include="Header.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Roboto-Black.ttf" />
+    <Font Include="Star Trebek.otf" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
