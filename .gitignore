@@ -34,3 +34,6 @@
 *.app
 .vs/PA8_SFML/v16/Browse.VC.db
 .vs/PA8_SFML/v16/.suo
+*.db
+*.db
+.vs/PA8_SFML/v16/.suo
