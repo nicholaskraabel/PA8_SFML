@@ -19,10 +19,11 @@ void Card::draw(sf::RenderTarget &window, float xLoc, float yLoc, float rotation
         std::cout << "Card is undefined, can not be display." << std::endl;
         return;
     }
+    std::cout << "this ran" << std::endl;
     sf::Texture Ctexture;
     sf::RectangleShape card(sf::Vector2f(100.f, 139.f));
-    card.setPosition(xLoc, yLoc);
     card.setRotation(rotation);
+    card.setPosition(xLoc, yLoc);
     Ctexture.loadFromFile(fileIdentifier);
     card.setTexture(&Ctexture);
     window.draw(card);
@@ -39,8 +40,8 @@ void Card::drawBack(sf::RenderTarget& window, float xLoc, float yLoc, float rota
     }
     sf::Texture Ctexture;
     sf::RectangleShape card(sf::Vector2f(100.f, 139.f));
-    card.setPosition(xLoc, yLoc);
     card.setRotation(rotation);
+    card.setPosition(xLoc, yLoc);
     Ctexture.loadFromFile("CardTextures\\BackOfCard.jpg");
     card.setTexture(&Ctexture);
     window.draw(card);

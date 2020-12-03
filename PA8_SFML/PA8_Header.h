@@ -1,13 +1,12 @@
 #pragma once
 
-
 #include <SFML/Graphics.hpp>
 #include "Card.h"
 #include "DeckConstruction.h"
 #include <Windows.h>
 
 
-int main();
+
 void draw_window(sf::RenderTarget& window);
 void draw_menu(sf::RenderTarget& window);
 void draw_message_board(sf::RenderTarget& window);

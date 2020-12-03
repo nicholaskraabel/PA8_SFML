@@ -4,7 +4,9 @@
 #include <list>
 #include <vector>
 #include <stack>
+#include <iterator>
 #include <iostream>
+#include <algorithm>
 
 bool compare(Card &c1, Card &c2)
 {
@@ -15,26 +17,25 @@ bool compare(Card &c1, Card &c2)
 
 void Player::fillHand(std::stack <Card>& deck)
 {
-	std::list<Card>::iterator itr = hand.begin();
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 5; ++i)
 	{
 		Card temp = deck.top();
-		*itr = temp;
+		hand.push_back(temp);
 		deck.pop();
-		itr++;
 	}
-	hand.sort(compare);
+	std::sort(hand.begin(), hand.end(), compare);
 }
+
 
 void HumanPlayer::displayHand(sf::RenderTarget &window)
 {
 	//don't know the exact coordinates but it will be something like this
-	float startPt = (hand.size() * 15 - 1000/*size of the window*/) / 2.0;
-	std::list<Card>::iterator itr = hand.begin();
-	for (int i = 0; i < hand.size(); i++)
+	int size = hand.size();
+	float startPt = (620 - size * 15) / 2.0 + 850;
+	for (int i = 0; i < size; i++)
 	{
-		itr->draw(window, startPt + (i * 15), 500, 0.f);
-		itr++;
+		Card temp = hand[i];
+		temp.draw(window, startPt + (i * 15), 637.5, 0.f);
 	}
 
 
@@ -44,26 +45,33 @@ void HumanPlayer::displayHand(sf::RenderTarget &window)
 void AIPlayer::displayHand(sf::RenderTarget& window)
 {
 	//don't know the exact coordinates but it will be something like this
+	float startPt;
 	switch (playerNum)
 	{
 	case(2):
-		//put in the numbers
+		startPt = (620 - (int)hand.size() * 15) / 2.0 + 140;
+		for (int i = 0; i < hand.size(); i++)
+		{
+			hand[i].drawBack(window, 1480, startPt + i * 15, 90);
+		}
 		break;
 	case(3):
-		//addd numbers
+		startPt = (620 - (int)hand.size() * 15) / 2.0 +	950;
+		for (int i = 0; i < hand.size(); i++)
+		{
+			hand[i].drawBack(window, startPt + (i * 15), 312.5, 180);
+		}
 		break;
 	case(4):
-		//add stuff
+		startPt = (620 - (int)hand.size() * 15) / 2.0 + 140;
+		for (int i = 0; i < hand.size(); i++)
+		{
+			hand[i].drawBack(window, 1010, startPt + i *15, 90);
+		}
 		break;
 	default:
 		std::cout << "Something bad happen. (I don't know how this happen)\n";
 
-	}
-	float startPt = (hand.size() * 15 - 1000/*size of the window*/) / 2.0;
-	std::list<Card>::iterator itr = hand.begin();
-	for (int i = 0; i < hand.size(); i++)
-	{
-		itr->drawBack(window, 100, 100, 90);
 	}
 
 
@@ -73,25 +81,22 @@ void Player::askForCard(Player& target, int card)
 {
 	Card tempHold[4];
 	int tracker = 0;
-	std::list<Card>::iterator itr = target.hand.begin();
 	for(int i = 0; i < target.hand.size(); i++)
 	{
-		if (itr->getFaceValue() == card)
+		if (target.hand[i].getFaceValue() == card)
 		{
-			tempHold[tracker] = *itr;
-			itr = target.hand.erase(itr);
+			tempHold[tracker] = target.hand[i];
+			target.hand.erase(hand.begin()+i);
 
 			tracker++;
 		}
-
-		itr++;
 	}
 	for (int i = 0; i < tracker; i++)
 	{
 		hand.push_back(tempHold[i]);
 	}
 	//really hopeful this just works
-	hand.sort(compare); 
+	std::sort(hand.begin(), hand.end(), compare); 
 }
 
 int AIPlayer::selectCard()
@@ -101,11 +106,9 @@ int AIPlayer::selectCard()
 	//then selects value with the highest number filtering out four out a kinds 
 	int tracker = 0;
 	int CM[] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
-	std::list<Card>::iterator itr = hand.begin();
 	for (int i = 0; i < hand.size(); i++)
 	{
-		CM[itr->getFaceValue()-1]++;
-		itr++;
+		CM[hand[i].getFaceValue()-1]++;
 	}
 	//getting index of max
 	int Index, max = 0;
@@ -126,3 +129,55 @@ int AIPlayer::selectCard()
 	}
 	return Index;
 }
+
+//void Mergesort(std::vector<Card>& hand) {
+//	if (hand.size() <= 1) 
+//		return;
+//
+//	int mid = hand.size() / 2;
+//	std::vector<Card> left;
+//	int count = 0;
+//	for (int i = 0; i <= mid; i++)
+//	{
+//		left[count] = hand[count];
+//		count++;
+//	}
+//
+//	std::vector<Card> right;
+//	for (int i = count; i < hand.size(); i++)
+//	{
+//		right[count] = hand[count];
+//		count++;
+//	}
+//	Mergesort(left);
+//	Mergesort(right);
+//	merge(left, right, hand);
+//}
+//
+//void merge(std::vector<Card>& left, std::vector<Card>& right, std::vector<Card>& results)
+//{
+//	int L_size = left.size();
+//	int R_size = right.size();
+//	int i = 0, j = 0, k = 0;
+//	// two finger algorithm
+//	while (j < L_size && k < R_size)
+//	{
+//		if (left[j].compare(right[k])) {
+//			results[i] = left[j];
+//			j++;
+//		}
+//		else {
+//			results[i] = right[k];
+//			k++;
+//		}
+//		i++;
+//	}
+//	while (j < L_size) {
+//		results[i] = left[j];
+//		j++; i++;
+//	}
+//	while (k < R_size) {
+//		results[i] = right[k];
+//		k++; i++;
+//	}
+//}

@@ -2,12 +2,14 @@
 #include "Card.h"
 #include <list>
 #include <stack>
+#include <vector>
+
 class Player {
 protected:
 	int score;
 	int playerNum;
 public:
-	std::list <Card> hand;
+	std::vector <Card> hand;
 	Player(int pn)
 	{
 		score = 0;
@@ -16,33 +18,21 @@ public:
 	~Player(){}
 
 	void setScore(int sc)
-	{
-		score = sc;
-	}
+	{score = sc;}
+
 	int getScore()
-	{
-		return score;
-	}
+	{return score;}
+
 	//run once at the begining of game 
-	virtual void fillHand(std::stack <Card>&);
-
-	virtual void displayHand(sf::RenderTarget&);
-
-	virtual void askForCard(Player&, int);
-
-	virtual void sortHand();
-
-
-
-
-
+	void fillHand(std::stack <Card>&);
+	void displayHand(sf::RenderTarget&){}
+	void askForCard(Player&, int);
 };
 
 class HumanPlayer : public Player
 {
 public:
 	HumanPlayer(int pn) : Player(pn){}
-
 
 	void displayHand(sf::RenderTarget&);
 };
@@ -56,3 +46,7 @@ public:
 
 	int selectCard();
 };
+
+void Mergesort(std::vector<Card>&);
+
+void merge(std::vector<Card>&, std::vector<Card>&, std::vector<Card>&);

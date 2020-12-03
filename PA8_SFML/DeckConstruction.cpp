@@ -45,7 +45,20 @@ void deckConstuctor(Card(&deck)[deckSize])
 	}
 }
 
-void gameDeck(std::stack <Card>&)
+void gameDeck(std::stack <Card>& finalDeck)
 {
+	Card deck[52];
+	deckConstuctor(deck);
+	//shuffle function
+
+	while (!finalDeck.empty())
+	{
+		finalDeck.pop();
+	}
+	for (int i = 0; i < 52; i++)
+	{
+		finalDeck.push(deck[i]);
+	}
+
 
 }

@@ -1,9 +1,9 @@
-//#include <SFML/Graphics.hpp>
-//#include "Card.h"
-//#include "DeckConstruction.h"
-//#include <Windows.h>
 
+#include <SFML/Graphics.hpp>
+#include "Card.h"
+#include "DeckConstruction.h"
 #include "PA8_Header.h"
+#include "Player.h"
 
 int main()
 {
@@ -142,15 +142,22 @@ int main()
           //start of game intailizeing deck shuffle dealing 
           //ends when deck runs out
 
-        Card deck[deckSize];
-        deckConstuctor(deck);
-        window.clear();
-        /* for (int i = 0; i < 52; i++)
-         {
-             deck[i].draw(window, 80 + (i * 15), 500);
-         }
-         deck[0].drawBack(window, 450, 150);*/
+        std::stack<Card> deck;
+        Card deckCard = Card(1, 's', "no");
+        gameDeck(deck);
+        HumanPlayer P1 = HumanPlayer(1);
+        P1.fillHand(deck);
+        AIPlayer P2 = AIPlayer(2);
+        P2.fillHand(deck);
+        AIPlayer P3 = AIPlayer(3);
+        P3.fillHand(deck);
+        AIPlayer P4 = AIPlayer(4);
+        P4.fillHand(deck);
 
+
+
+
+        window.clear();
         draw_window(window); // displays the main board with players
         draw_menu(window);  // displays the menu
         draw_message_board(window); // displays the message board
@@ -158,6 +165,13 @@ int main()
         draw_user_input(window, s_user);  // display user input
         draw_player_input_boxes(window); // display Player choice boxes
         draw_go_fishing_message(window); // displays for you to go fish
+        P1.displayHand(window);
+        P2.displayHand(window);
+        P3.displayHand(window);
+        P4.displayHand(window);
+        if (!deck.empty())
+            deckCard.drawBack(window, 1125, 405.5, 0);
+
         window.display();  // ouputs the window
 
        /* Sleep(100000);
