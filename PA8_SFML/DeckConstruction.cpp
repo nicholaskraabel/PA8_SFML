@@ -62,3 +62,18 @@ void gameDeck(std::stack <Card>& finalDeck)
 
 
 }
+void shuffle(Card(&deck)[deckSize])
+{
+	srand(time(NULL));
+	for (int j = 0; j < 100; j++)
+	{
+		for (int i = 0; i < 52; i++)
+		{
+			int randCard = rand() % 52;
+			Card card = deck[i];
+
+			deck[i] = deck[randCard];
+			deck[randCard] = card;
+		}
+	}
+}
