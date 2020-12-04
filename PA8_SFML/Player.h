@@ -26,7 +26,9 @@ public:
 	//run once at the begining of game 
 	void fillHand(std::stack <Card>&);
 	void displayHand(sf::RenderTarget&){}
-	void askForCard(Player&, int);
+	void askForCard(Player&, int, std::stack<Card>&, std::stack<Card>& discard);
+	void drawFromDeck(std::stack<Card>&);
+	void scoreCards(int, std::stack<Card>&);
 };
 
 class HumanPlayer : public Player

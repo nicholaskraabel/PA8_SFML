@@ -8,11 +8,31 @@
 #include <iostream>
 #include <algorithm>
 
-bool compare(Card &c1, Card &c2)
+bool compare(Card c1, Card c2)
 {
-	if (c1.getFaceValue() == c2.getFaceValue())
-		return true;
-	return false;
+	return c1.getFaceValue() > c2.getFaceValue();
+}
+
+void Player::scoreCards(int value, std::stack<Card> &discard)
+{
+	for (int i = 0; i < hand.size(); i++)
+	{
+		if (hand[i].getFaceValue() == value)
+		{
+			discard.push(hand[i]);
+			hand.erase(hand.begin() + i);
+			score++;
+		}
+	}
+
+}
+void Player::drawFromDeck(std::stack<Card>& deck)
+{
+	if (deck.empty())
+		return;
+	hand.push_back(deck.top());
+	deck.pop();
+	std::sort(hand.begin(), hand.end(), compare);
 }
 
 void Player::fillHand(std::stack <Card>& deck)
@@ -31,7 +51,7 @@ void HumanPlayer::displayHand(sf::RenderTarget &window)
 {
 	//don't know the exact coordinates but it will be something like this
 	int size = hand.size();
-	float startPt = (620 - size * 15) / 2.0 + 850;
+	float startPt = (610 - size * 15) / 2.0 + 850;
 	for (int i = 0; i < size; i++)
 	{
 		Card temp = hand[i];
@@ -48,25 +68,25 @@ void AIPlayer::displayHand(sf::RenderTarget& window)
 	float startPt;
 	switch (playerNum)
 	{
-	case(2):
+	case(4):
 		startPt = (620 - (int)hand.size() * 15) / 2.0 + 140;
 		for (int i = 0; i < hand.size(); i++)
 		{
-			hand[i].drawBack(window, 1480, startPt + i * 15, 90);
+			hand[i].draw(window, 1480, startPt + i * 15, 90);
 		}
 		break;
 	case(3):
 		startPt = (620 - (int)hand.size() * 15) / 2.0 +	950;
 		for (int i = 0; i < hand.size(); i++)
 		{
-			hand[i].drawBack(window, startPt + (i * 15), 312.5, 180);
+			hand[i].draw(window, startPt + (i * 15), 312.5, 180);
 		}
 		break;
-	case(4):
+	case(2):
 		startPt = (620 - (int)hand.size() * 15) / 2.0 + 140;
 		for (int i = 0; i < hand.size(); i++)
 		{
-			hand[i].drawBack(window, 1010, startPt + i *15, 90);
+			hand[i].draw(window, 1010, startPt + i *15, 90);
 		}
 		break;
 	default:
@@ -77,7 +97,7 @@ void AIPlayer::displayHand(sf::RenderTarget& window)
 
 }
 
-void Player::askForCard(Player& target, int card)
+void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::stack<Card>&discard)
 {
 	Card tempHold[4];
 	int tracker = 0;
@@ -86,7 +106,7 @@ void Player::askForCard(Player& target, int card)
 		if (target.hand[i].getFaceValue() == card)
 		{
 			tempHold[tracker] = target.hand[i];
-			target.hand.erase(hand.begin()+i);
+			target.hand.erase(target.hand.begin()+i);
 
 			tracker++;
 		}
@@ -95,8 +115,39 @@ void Player::askForCard(Player& target, int card)
 	{
 		hand.push_back(tempHold[i]);
 	}
+	if (tracker == 0)
+	{
+		drawFromDeck(deck);
+	}
 	//really hopeful this just works
-	std::sort(hand.begin(), hand.end(), compare); 
+	std::sort(hand.begin(), hand.end(), compare);
+	
+	std::cout << "User hand" << std::endl;
+	for (int i = 0; i < hand.size(); i++)
+	{
+		std::cout << hand[i].getFaceValue() << " ";
+
+	}
+	std::cout << "\nTarget hand" << std::endl;
+	for (int i = 0; i < target.hand.size(); i++)
+	{
+		std::cout << target.hand[i].getFaceValue() << " ";
+
+	}
+	std::cout << "\n\n";
+	int CM[] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	for (int i = 0; i < hand.size(); i++)
+	{
+		CM[hand[i].getFaceValue() - 1]++;
+	}
+	for (int i = 1; i <= 13; i++)
+	{
+		if (CM[i - 1] == 4)
+		{
+			scoreCards(CM[i], discard);
+		}
+	}
+	
 }
 
 int AIPlayer::selectCard()
@@ -104,7 +155,6 @@ int AIPlayer::selectCard()
 	//This is a modified counting sort 
 	//adds one at the index of face value of the card
 	//then selects value with the highest number filtering out four out a kinds 
-	int tracker = 0;
 	int CM[] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 	for (int i = 0; i < hand.size(); i++)
 	{
@@ -116,7 +166,7 @@ int AIPlayer::selectCard()
 	{
 		if (CM[i - 1] == 4)
 		{
-			//playCardSet() write this later
+			//do nothing will be score else
 		}
 		else 
 		{

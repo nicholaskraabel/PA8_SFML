@@ -33,6 +33,6 @@ public:
     char getSuit();
     void draw(sf::RenderTarget &, float, float, float);
     void drawBack(sf::RenderTarget&, float, float, float);
-    bool compare(Card);
+    int compare(Card);
 
 };

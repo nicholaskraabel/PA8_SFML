@@ -2,6 +2,10 @@
 #include "Card.h"
 #include <string>
 #include <stack>
+#include <algorithm>
+#include <ctime>        // std::time
+#include <cstdlib>
+#include <array>
 void deckConstuctor(Card(&deck)[deckSize])
 {
 	std::string suit, fileTag;
@@ -45,11 +49,27 @@ void deckConstuctor(Card(&deck)[deckSize])
 	}
 }
 
+void shuffle(Card(&deck)[deckSize])
+{
+	std::srand(std::time(nullptr));
+	for (int j = 0; j < 100; j++)
+	{
+		for (int i = 0; i < 52; i++)
+		{
+			int randCard = std::rand() % 52;
+			Card card = deck[i];
+
+			deck[i] = deck[randCard];
+			deck[randCard] = card;
+		}
+	}
+}
+
 void gameDeck(std::stack <Card>& finalDeck)
 {
-	Card deck[52];
+	Card deck[deckSize];
 	deckConstuctor(deck);
-	//shuffle function
+	shuffle(deck);
 
 	while (!finalDeck.empty())
 	{
@@ -61,19 +81,4 @@ void gameDeck(std::stack <Card>& finalDeck)
 	}
 
 
-}
-void shuffle(Card(&deck)[deckSize])
-{
-	srand(time(NULL));
-	for (int j = 0; j < 100; j++)
-	{
-		for (int i = 0; i < 52; i++)
-		{
-			int randCard = rand() % 52;
-			Card card = deck[i];
-
-			deck[i] = deck[randCard];
-			deck[randCard] = card;
-		}
-	}
 }

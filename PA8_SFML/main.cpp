@@ -4,22 +4,36 @@
 #include "DeckConstruction.h"
 #include "PA8_Header.h"
 #include "Player.h"
+#include <time.h>
+#include <cstdlib>
+#include <iostream>
 
 int main()
 {
     int input = 0;
     int mouse_x = 0;
     int mouse_y = 0;
-    int Go_Fishing = 0;
+    bool Go_Fishing = true;
     int card_user = 0;
     char s_user = '\0';
-    int player = 0;
+    int player = -1;
 
     sf::RenderWindow window(sf::VideoMode(1700, 950), "Go Fish"); 
 
 
 
    
+    std::stack<Card> deck, discard;
+    Card deckCard = Card(1, 's', "no");
+    gameDeck(deck);
+    HumanPlayer P1 = HumanPlayer(1);
+    P1.fillHand(deck);
+    AIPlayer P2 = AIPlayer(2);
+    P2.fillHand(deck);
+    AIPlayer P3 = AIPlayer(3);
+    P3.fillHand(deck);
+    AIPlayer P4 = AIPlayer(4);
+    P4.fillHand(deck);
 
 
     //sf::RenderWindow window(sf::VideoMode(1000, 1000), "GO Fish");
@@ -45,7 +59,7 @@ int main()
             if (mouse_y < 380 && mouse_y >280)
             {
                 if (mouse_x < 390 && mouse_x >290)
-                    Go_Fishing = 1;
+                    Go_Fishing = true;
             }
 
             if (mouse_y < 700 && mouse_y >600)
@@ -67,7 +81,6 @@ int main()
             }
 
             
-
         }
 
 
@@ -142,18 +155,7 @@ int main()
           //start of game intailizeing deck shuffle dealing 
           //ends when deck runs out
 
-        std::stack<Card> deck;
-        Card deckCard = Card(1, 's', "no");
-        gameDeck(deck);
-        HumanPlayer P1 = HumanPlayer(1);
-        P1.fillHand(deck);
-        AIPlayer P2 = AIPlayer(2);
-        P2.fillHand(deck);
-        AIPlayer P3 = AIPlayer(3);
-        P3.fillHand(deck);
-        AIPlayer P4 = AIPlayer(4);
-        P4.fillHand(deck);
-
+        
 
 
 
@@ -171,8 +173,96 @@ int main()
         P4.displayHand(window);
         if (!deck.empty())
             deckCard.drawBack(window, 1125, 405.5, 0);
+        if (!discard.empty())
+            discard.top().draw(window, 1000, 405.5, 0);
 
+        //if your running on a mac remove the sleep functions
         window.display();  // ouputs the window
+        if (Go_Fishing)
+        {
+            std::srand(std::time(nullptr));
+            if (s_user == '\0' || player == -1)
+            {
+                std::cout << "You need to select a player and a card" << std::endl;
+            }
+            else
+            {
+                std::cout << "P:" << player << " C:" << card_user << std::endl;
+                //Internal game loop backend
+                switch (player)
+                {
+                case(2):
+                    P1.askForCard(P2, card_user, deck, discard);
+                    break;
+                case(3):
+                    P1.askForCard(P3, card_user, deck, discard);
+                    break;
+                case(4):
+                    P1.askForCard(P4, card_user,deck, discard);
+                    break;
+                }
+                Sleep(100);
+                int selector = std::rand() % 3, selHand;
+                selHand = P2.selectCard();
+                std::cout << " C:" << selHand << std::endl;
+                switch (selector)
+                {
+                case(0):
+                    P2.askForCard(P1, selHand, deck, discard);
+                    break;
+                case(1):
+                    P2.askForCard(P3, selHand, deck, discard);
+                    break;
+                case(2):
+                    P2.askForCard(P4, selHand, deck, discard);
+                    break;
+                }
+                Sleep(100);
+                selector = std::rand() % 3;
+                selHand = P3.selectCard();
+                std::cout << " C:" << selHand << std::endl;
+                switch (selector)
+                {
+                case(0):
+                    P3.askForCard(P1, selHand, deck, discard);
+                    break;
+                case(1):
+                    P3.askForCard(P2, selHand, deck, discard);
+                    break;
+                case(2):
+                    P3.askForCard(P4, selHand, deck, discard);
+                    break;
+                }
+                Sleep(100);
+                selector = std::rand() % 3;
+                selHand = P4.selectCard();
+                std::cout << " C:" << selHand << std::endl;
+                switch (selector)
+                {
+                case(0):
+                    P4.askForCard(P1, selHand, deck, discard);
+                    break;
+                case(1):
+                    P4.askForCard(P2, selHand, deck, discard);
+                    break;
+                case(2):
+                    P4.askForCard(P3, selHand, deck, discard);
+                    break;
+                }
+                Sleep(100);
+                std::cout << "\n|End of round|\n"; 
+                
+
+                player = -1;
+                card_user = 0;
+                s_user = '\0';
+
+
+            }
+            Go_Fishing = false;
+
+
+        }
 
        /* Sleep(100000);
         window.close();*/
