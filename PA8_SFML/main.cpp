@@ -187,7 +187,7 @@ int main()
             }
             else
             {
-                std::cout << "P:" << player << " C:" << card_user << std::endl;
+                std::cout << "C: " << card_user << " P: " << player - 1 << std::endl;
                 //Internal game loop backend
                 switch (player)
                 {
@@ -204,48 +204,57 @@ int main()
                 Sleep(100);
                 int selector = std::rand() % 3, selHand;
                 selHand = P2.selectCard();
-                std::cout << " C:" << selHand << std::endl;
+                std::cout << "C: " << selHand;
                 switch (selector)
                 {
                 case(0):
+                    std::cout << " P1: P" << std::endl;
                     P2.askForCard(P1, selHand, deck, discard);
                     break;
                 case(1):
+                    std::cout << " P1: 2" << std::endl;
                     P2.askForCard(P3, selHand, deck, discard);
                     break;
                 case(2):
+                    std::cout << " P1: 3" << std::endl;
                     P2.askForCard(P4, selHand, deck, discard);
                     break;
                 }
                 Sleep(100);
                 selector = std::rand() % 3;
                 selHand = P3.selectCard();
-                std::cout << " C:" << selHand << std::endl;
+                std::cout << "C: " << selHand;
                 switch (selector)
                 {
                 case(0):
+                    std::cout << " P2: P" << std::endl;
                     P3.askForCard(P1, selHand, deck, discard);
                     break;
                 case(1):
+                    std::cout << " P2: 1" << std::endl;
                     P3.askForCard(P2, selHand, deck, discard);
                     break;
                 case(2):
+                    std::cout << " P2: 3" << std::endl;
                     P3.askForCard(P4, selHand, deck, discard);
                     break;
                 }
                 Sleep(100);
                 selector = std::rand() % 3;
                 selHand = P4.selectCard();
-                std::cout << " C:" << selHand << std::endl;
+                std::cout << "C: " << selHand;
                 switch (selector)
                 {
                 case(0):
+                    std::cout << " P3: P" << std::endl;
                     P4.askForCard(P1, selHand, deck, discard);
                     break;
                 case(1):
+                    std::cout << " P3: 1" << std::endl;
                     P4.askForCard(P2, selHand, deck, discard);
                     break;
                 case(2):
+                    std::cout << " P3: 2" << std::endl;
                     P4.askForCard(P3, selHand, deck, discard);
                     break;
                 }

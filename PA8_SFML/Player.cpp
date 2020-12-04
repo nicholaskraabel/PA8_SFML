@@ -118,6 +118,8 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 	if (tracker == 0)
 	{
 		drawFromDeck(deck);
+		std::cout << "Drawn from deck." << std::endl;
+		return;
 	}
 	//really hopeful this just works
 	std::sort(hand.begin(), hand.end(), compare);
@@ -134,7 +136,7 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 		std::cout << target.hand[i].getFaceValue() << " ";
 
 	}
-	std::cout << "\n\n";
+	std::cout << "\n";
 	int CM[] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
 	for (int i = 0; i < hand.size(); i++)
 	{
