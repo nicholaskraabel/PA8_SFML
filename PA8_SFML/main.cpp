@@ -187,7 +187,7 @@ int main()
             }
             else
             {
-                std::cout << "C: " << card_user << " P: " << player - 1 << std::endl;
+                std::cout << "C: " << card_user << " P: " << player << std::endl;
                 //Internal game loop backend
                 switch (player)
                 {

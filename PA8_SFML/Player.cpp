@@ -17,11 +17,14 @@ void Player::scoreCards(int value, std::stack<Card> &discard)
 {
 	for (int i = 0; i < hand.size(); i++)
 	{
+		std::cout << "\nvalue is: " << value;
+		std::cout << "\nface  is: " << hand[i].getFaceValue();
 		if (hand[i].getFaceValue() == value)
 		{
 			discard.push(hand[i]);
-			hand.erase(hand.begin() + i);
+			hand.erase(hand.begin() + i, hand.begin()+i+4);			
 			score++;
+			return;
 		}
 	}
 
@@ -100,17 +103,21 @@ void AIPlayer::displayHand(sf::RenderTarget& window)
 void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::stack<Card>&discard)
 {
 	Card tempHold[4];
-	int tracker = 0;
+	int tracker = 0, firstIndex = -1;
 	for(int i = 0; i < target.hand.size(); i++)
 	{
 		if (target.hand[i].getFaceValue() == card)
 		{
 			tempHold[tracker] = target.hand[i];
-			target.hand.erase(target.hand.begin()+i);
-
+			if (firstIndex == -1)
+				firstIndex = i;
 			tracker++;
+			std::cout << tempHold[i].getFaceValue(); 
 		}
 	}
+	//erases the cards from hand
+	if(firstIndex != -1)
+		target.hand.erase(target.hand.begin() + firstIndex, target.hand.begin() + firstIndex + tracker);
 	for (int i = 0; i < tracker; i++)
 	{
 		hand.push_back(tempHold[i]);
@@ -121,7 +128,7 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 		std::cout << "Drawn from deck." << std::endl;
 		return;
 	}
-	//really hopeful this just works
+	
 	std::sort(hand.begin(), hand.end(), compare);
 	
 	std::cout << "User hand" << std::endl;
@@ -136,17 +143,13 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 		std::cout << target.hand[i].getFaceValue() << " ";
 
 	}
-	std::cout << "\n";
-	int CM[] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
-	for (int i = 0; i < hand.size(); i++)
+	std::cout << std::endl;
+	for (int i = 0; i < hand.size() - 3; i++)
 	{
-		CM[hand[i].getFaceValue() - 1]++;
-	}
-	for (int i = 1; i <= 13; i++)
-	{
-		if (CM[i - 1] == 4)
+		if (hand[i].getFaceValue() == hand[i + 1].getFaceValue() && hand[i].getFaceValue() == hand[i + 2].getFaceValue()
+			&& hand[i].getFaceValue() == hand[i + 3].getFaceValue())
 		{
-			scoreCards(CM[i], discard);
+			scoreCards(hand[i].getFaceValue(), discard);
 		}
 	}
 	
