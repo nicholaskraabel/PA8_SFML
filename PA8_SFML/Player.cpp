@@ -7,6 +7,7 @@
 #include <iterator>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 bool compare(Card c1, Card c2)
 {
@@ -236,3 +237,40 @@ int AIPlayer::selectCard()
 //		k++; i++;
 //	}
 //}
+
+/*
+Daniel Clawson
+12/4/2020
+*/
+void Player::displayscore(sf::RenderTarget& window)
+{
+	sf::Font font2;
+	if (!font2.loadFromFile("Star Trebek.otf")) // select the font
+		throw("Could not load font");
+
+	//int score = 0;
+	std::string score_c;
+
+	//score = getScore();
+
+	score_c = std::to_string(score);
+
+	// TITLE
+	sf::Text Score;
+	Score.setFont(font2);
+	Score.setString(score_c);// set the string to display
+	Score.setCharacterSize(40); // set the character size in pixels, not points! 
+	Score.setFillColor(sf::Color::Yellow); // set the color
+	Score.setStyle(sf::Text::Bold); // set the text style
+	//Score.setPosition(100, 100);
+	if (playerNum == 1)
+		Score.setPosition(1250, 870);
+	if (playerNum == 2)
+		Score.setPosition(735, 470);
+	if (playerNum == 3)
+		Score.setPosition(1250, 50);
+	if (playerNum == 4)
+		Score.setPosition(1605, 470);
+
+	window.draw(Score);
+}

@@ -171,6 +171,11 @@ int main()
         P2.displayHand(window);
         P3.displayHand(window);
         P4.displayHand(window);
+        P1.displayscore(window);
+        P2.displayscore(window);
+        P3.displayscore(window);
+        P4.displayscore(window);
+
         if (!deck.empty())
             deckCard.drawBack(window, 1125, 405.5, 0);
         if (!discard.empty())
