@@ -171,10 +171,15 @@ int main()
         P2.displayHand(window);
         P3.displayHand(window);
         P4.displayHand(window);
+        P1.displayscore(window);
+        P2.displayscore(window);
+        P3.displayscore(window);
+        P4.displayscore(window);
+
         if (!deck.empty())
             deckCard.drawBack(window, 1125, 405.5, 0);
         if (!discard.empty())
-            discard.top().draw(window, 1000, 405.5, 0);
+            discard.top().draw(window, 1565, 650, 0);
 
         //if your running on a mac remove the sleep functions
         window.display();  // ouputs the window
@@ -187,7 +192,7 @@ int main()
             }
             else
             {
-                std::cout << "P:" << player << " C:" << card_user << std::endl;
+                std::cout << "C: " << card_user << " P: " << player - 1 << std::endl;
                 //Internal game loop backend
                 switch (player)
                 {
@@ -204,48 +209,57 @@ int main()
                 Sleep(100);
                 int selector = std::rand() % 3, selHand;
                 selHand = P2.selectCard();
-                std::cout << " C:" << selHand << std::endl;
+                std::cout << "C: " << selHand;
                 switch (selector)
                 {
                 case(0):
+                    std::cout << " P1: P" << std::endl;
                     P2.askForCard(P1, selHand, deck, discard);
                     break;
                 case(1):
+                    std::cout << " P1: 2" << std::endl;
                     P2.askForCard(P3, selHand, deck, discard);
                     break;
                 case(2):
+                    std::cout << " P1: 3" << std::endl;
                     P2.askForCard(P4, selHand, deck, discard);
                     break;
                 }
                 Sleep(100);
                 selector = std::rand() % 3;
                 selHand = P3.selectCard();
-                std::cout << " C:" << selHand << std::endl;
+                std::cout << "C: " << selHand;
                 switch (selector)
                 {
                 case(0):
+                    std::cout << " P2: P" << std::endl;
                     P3.askForCard(P1, selHand, deck, discard);
                     break;
                 case(1):
+                    std::cout << " P2: 1" << std::endl;
                     P3.askForCard(P2, selHand, deck, discard);
                     break;
                 case(2):
+                    std::cout << " P2: 3" << std::endl;
                     P3.askForCard(P4, selHand, deck, discard);
                     break;
                 }
                 Sleep(100);
                 selector = std::rand() % 3;
                 selHand = P4.selectCard();
-                std::cout << " C:" << selHand << std::endl;
+                std::cout << "C: " << selHand;
                 switch (selector)
                 {
                 case(0):
+                    std::cout << " P3: P" << std::endl;
                     P4.askForCard(P1, selHand, deck, discard);
                     break;
                 case(1):
+                    std::cout << " P3: 1" << std::endl;
                     P4.askForCard(P2, selHand, deck, discard);
                     break;
                 case(2):
+                    std::cout << " P3: 2" << std::endl;
                     P4.askForCard(P3, selHand, deck, discard);
                     break;
                 }

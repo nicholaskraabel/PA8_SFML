@@ -29,6 +29,7 @@ public:
 	void askForCard(Player&, int, std::stack<Card>&, std::stack<Card>& discard);
 	void drawFromDeck(std::stack<Card>&);
 	void scoreCards(int, std::stack<Card>&);
+	void displayscore(sf::RenderTarget& window);
 };
 
 class HumanPlayer : public Player

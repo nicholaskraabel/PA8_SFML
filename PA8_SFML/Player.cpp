@@ -7,6 +7,7 @@
 #include <iterator>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 bool compare(Card c1, Card c2)
 {
@@ -20,8 +21,9 @@ void Player::scoreCards(int value, std::stack<Card> &discard)
 		if (hand[i].getFaceValue() == value)
 		{
 			discard.push(hand[i]);
-			hand.erase(hand.begin() + i);
+			hand.erase(hand.begin() + i, hand.begin()+i+4);			
 			score++;
+			return;
 		}
 	}
 
@@ -97,19 +99,25 @@ void AIPlayer::displayHand(sf::RenderTarget& window)
 
 }
 
-void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::stack<Card>&discard)
+void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::stack<Card> &discard)
 {
 	Card tempHold[4];
-	int tracker = 0;
+	int tracker = 0, firstIndex = -1;
 	for(int i = 0; i < target.hand.size(); i++)
 	{
 		if (target.hand[i].getFaceValue() == card)
 		{
 			tempHold[tracker] = target.hand[i];
-			target.hand.erase(target.hand.begin()+i);
-
-			tracker++;
+			if (firstIndex == -1)
+				firstIndex = i;
+			tracker++; 
 		}
+	}
+	//erases the cards from hand
+	if (firstIndex != -1)
+	{
+		target.hand.erase(target.hand.begin() + firstIndex, target.hand.begin() + firstIndex + tracker);
+		target.hand.shrink_to_fit();
 	}
 	for (int i = 0; i < tracker; i++)
 	{
@@ -118,8 +126,10 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 	if (tracker == 0)
 	{
 		drawFromDeck(deck);
+		std::cout << "Drawn from deck." << std::endl;
+		return;
 	}
-	//really hopeful this just works
+	
 	std::sort(hand.begin(), hand.end(), compare);
 	
 	std::cout << "User hand" << std::endl;
@@ -134,17 +144,13 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 		std::cout << target.hand[i].getFaceValue() << " ";
 
 	}
-	std::cout << "\n\n";
-	int CM[] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
-	for (int i = 0; i < hand.size(); i++)
+	std::cout << std::endl;
+	for (int i = 0; i < hand.size() - 3; i++)
 	{
-		CM[hand[i].getFaceValue() - 1]++;
-	}
-	for (int i = 1; i <= 13; i++)
-	{
-		if (CM[i - 1] == 4)
+		if (hand[i].getFaceValue() == hand[i + 1].getFaceValue() && hand[i].getFaceValue() == hand[i + 2].getFaceValue()
+			&& hand[i].getFaceValue() == hand[i + 3].getFaceValue())
 		{
-			scoreCards(CM[i], discard);
+			scoreCards(hand[i].getFaceValue(), discard);
 		}
 	}
 	
@@ -231,3 +237,40 @@ int AIPlayer::selectCard()
 //		k++; i++;
 //	}
 //}
+
+/*
+Daniel Clawson
+12/4/2020
+*/
+void Player::displayscore(sf::RenderTarget& window)
+{
+	sf::Font font2;
+	if (!font2.loadFromFile("Star Trebek.otf")) // select the font
+		throw("Could not load font");
+
+	//int score = 0;
+	std::string score_c;
+
+	//score = getScore();
+
+	score_c = std::to_string(score);
+
+	// TITLE
+	sf::Text Score;
+	Score.setFont(font2);
+	Score.setString(score_c);// set the string to display
+	Score.setCharacterSize(40); // set the character size in pixels, not points! 
+	Score.setFillColor(sf::Color::Yellow); // set the color
+	Score.setStyle(sf::Text::Bold); // set the text style
+	//Score.setPosition(100, 100);
+	if (playerNum == 1)
+		Score.setPosition(1250, 870);
+	if (playerNum == 2)
+		Score.setPosition(735, 470);
+	if (playerNum == 3)
+		Score.setPosition(1250, 50);
+	if (playerNum == 4)
+		Score.setPosition(1605, 470);
+
+	window.draw(Score);
+}
