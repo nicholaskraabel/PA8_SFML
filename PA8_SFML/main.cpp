@@ -174,7 +174,7 @@ int main()
         if (!deck.empty())
             deckCard.drawBack(window, 1125, 405.5, 0);
         if (!discard.empty())
-            discard.top().draw(window, 1000, 405.5, 0);
+            discard.top().draw(window, 1565, 650, 0);
 
         //if your running on a mac remove the sleep functions
         window.display();  // ouputs the window
@@ -187,7 +187,7 @@ int main()
             }
             else
             {
-                std::cout << "C: " << card_user << " P: " << player << std::endl;
+                std::cout << "C: " << card_user << " P: " << player - 1 << std::endl;
                 //Internal game loop backend
                 switch (player)
                 {

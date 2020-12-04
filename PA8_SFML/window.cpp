@@ -122,6 +122,15 @@ void draw_window(sf::RenderTarget& window)
     text_4.setStyle(sf::Text::Bold); // set the text style
     text_4.setPosition(685, 400);
 
+    //Discard text
+    sf::Text text_5; 
+    text_5.setFont(font);
+    text_5.setString("Discard");// set the string to display
+    text_5.setCharacterSize(30); // set the character size in pixels, not points! 
+    text_5.setFillColor(sf::Color::Yellow); // set the color
+    text_5.setStyle(sf::Text::Bold); // set the text style
+    text_5.setPosition(1555, 610);
+
     window.draw(rec); // output board
     window.draw(text_t); // output title
     window.draw(score1); // output score board 2
@@ -136,6 +145,7 @@ void draw_window(sf::RenderTarget& window)
     window.draw(text_2); // output Player 3
     window.draw(text_3); // output Player you
     window.draw(text_4); // output Player 1
+    window.draw(text_5); // discard pile.
 
 
 }

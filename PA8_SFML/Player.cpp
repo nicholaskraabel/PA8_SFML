@@ -17,8 +17,6 @@ void Player::scoreCards(int value, std::stack<Card> &discard)
 {
 	for (int i = 0; i < hand.size(); i++)
 	{
-		std::cout << "\nvalue is: " << value;
-		std::cout << "\nface  is: " << hand[i].getFaceValue();
 		if (hand[i].getFaceValue() == value)
 		{
 			discard.push(hand[i]);
@@ -100,7 +98,7 @@ void AIPlayer::displayHand(sf::RenderTarget& window)
 
 }
 
-void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::stack<Card>&discard)
+void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::stack<Card> &discard)
 {
 	Card tempHold[4];
 	int tracker = 0, firstIndex = -1;
@@ -111,13 +109,15 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 			tempHold[tracker] = target.hand[i];
 			if (firstIndex == -1)
 				firstIndex = i;
-			tracker++;
-			std::cout << tempHold[i].getFaceValue(); 
+			tracker++; 
 		}
 	}
 	//erases the cards from hand
-	if(firstIndex != -1)
+	if (firstIndex != -1)
+	{
 		target.hand.erase(target.hand.begin() + firstIndex, target.hand.begin() + firstIndex + tracker);
+		target.hand.shrink_to_fit();
+	}
 	for (int i = 0; i < tracker; i++)
 	{
 		hand.push_back(tempHold[i]);
