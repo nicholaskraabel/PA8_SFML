@@ -8,4 +8,5 @@ void deckConstuctor(Card(&deck)[deckSize]);
 //This is the actual stack used for the game which is given.
 void gameDeck(std::stack<Card>&);
 
+//shuffles the cards
 void shuffle(Card(&deck)[deckSize]);

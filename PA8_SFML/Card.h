@@ -3,14 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <string.h>
 
-//This may want to be move just needs to be in a collective header file.
 int const deckSize = 52;
 
 class Card {
 private:
     int facevalue;
     char suit;
-    std::string fileIdentifier;
+    std::string fileIdentifier; //used for locating texture
 
 public:
     Card()
@@ -31,8 +30,11 @@ public:
     {}
     int getFaceValue();
     char getSuit();
+    //draws the front face of the card
     void draw(sf::RenderTarget &, float, float, float);
+    //draws the back side of the card
     void drawBack(sf::RenderTarget&, float, float, float);
+    //compares face value
     int compare(Card);
 
 };
