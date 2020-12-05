@@ -1,5 +1,7 @@
 
 #include "PA8_Header.h"
+#include <time.h>
+#include <string>
 
 /*************
 Daniel
@@ -151,7 +153,7 @@ void draw_window(sf::RenderTarget& window)
 }
 
 
-void draw_go_fishing_message(sf::RenderTarget& window)
+void draw_go_fishing_message(sf::RenderTarget& window, std::string message, int center)
 {
     sf::Font font2;
     if (!font2.loadFromFile("Star Trebek.otf")) // select the font
@@ -160,13 +162,94 @@ void draw_go_fishing_message(sf::RenderTarget& window)
     // Go Fish text
     sf::Text g_f;
     g_f.setFont(font2);
-    g_f.setString("You need to Go Fish");// set the string to display
+    g_f.setString(message);// set the string to display
     g_f.setCharacterSize(50); // set the character size in pixels, not points! 
     g_f.setFillColor(sf::Color::Yellow); // set the color
     g_f.setStyle(sf::Text::Bold); // set the text style
-    g_f.setPosition(220, 820);
+    g_f.setPosition(220 + center, 820);
 
 
     window.draw(g_f);
+
+}
+
+void drawEndWindow(sf::RenderTarget& window, int sc1, int sc2, int sc3, int sc4)
+{
+    sf::Font font;
+    if (!font.loadFromFile("Roboto-Black.ttf")) // select the font
+        throw("Could not load font");
+    sf::Text title;
+    title.setFont(font);
+    std::string str = "The final scores for Go Fish Game.";
+    title.setString(str);
+    title.setCharacterSize(65);
+    title.setFillColor(sf::Color::Blue);
+    title.setStyle(sf::Text::Bold);
+    title.setPosition(300, 150);
+
+    sf::Text text1;
+    text1.setFont(font);
+    text1.setString(std::to_string(sc1));// set the string to display
+    text1.setCharacterSize(30); // set the character size in pixels, not points! 
+    text1.setFillColor(sf::Color::Black); // set the color
+    text1.setStyle(sf::Text::Bold); // set the text style
+    text1.setPosition(112.5, 337.5);
+    sf::RectangleShape score1;
+    score1.setSize(sf::Vector2f(75, 75));
+    score1.setOutlineThickness(8);
+    score1.setFillColor(sf::Color::Red);
+    score1.setPosition(75, 300);
+
+    sf::Text text2;
+    text2.setFont(font);
+    text2.setString(std::to_string(sc2));// set the string to display
+    text2.setCharacterSize(30); // set the character size in pixels, not points! 
+    text2.setFillColor(sf::Color::Black); // set the color
+    text2.setStyle(sf::Text::Bold); // set the text style
+    text2.setPosition(262.5, 337.5);
+    sf::RectangleShape score2;
+    score2.setSize(sf::Vector2f(75, 75));
+    score2.setOutlineThickness(8);
+    score2.setFillColor(sf::Color::Red);
+    score2.setPosition(225, 300);
+
+    sf::Text text3;
+    text3.setFont(font);
+    text3.setString(std::to_string(sc3));// set the string to display
+    text3.setCharacterSize(30); // set the character size in pixels, not points! 
+    text3.setFillColor(sf::Color::Black); // set the color
+    text3.setStyle(sf::Text::Bold); // set the text style
+    text3.setPosition(412.5, 337.5);
+    sf::RectangleShape score3;
+    score3.setSize(sf::Vector2f(75, 75));
+    score3.setOutlineThickness(8);
+    score3.setFillColor(sf::Color::Red);
+    score3.setPosition(375, 300);
+
+    sf::Text text4;
+    text4.setFont(font);
+    text4.setString(std::to_string(sc4));// set the string to display
+    text4.setCharacterSize(30); // set the character size in pixels, not points! 
+    text4.setFillColor(sf::Color::Black); // set the color
+    text4.setStyle(sf::Text::Bold); // set the text style
+    text4.setPosition(562.5, 337.5);
+    sf::RectangleShape score4;
+    score4.setSize(sf::Vector2f(75, 75));
+    score4.setOutlineThickness(8);
+    score4.setFillColor(sf::Color::Red);
+    score4.setPosition(525, 300);
+
+
+    window.clear();
+    window.draw(title);
+    window.draw(score1);
+    window.draw(text1);
+    window.draw(score2);
+    window.draw(text2);
+    window.draw(score3);
+    window.draw(text3);
+    window.draw(score4);
+    window.draw(text4);
+    
 
 }

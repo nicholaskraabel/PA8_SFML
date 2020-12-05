@@ -17,8 +17,9 @@ int main()
     int card_user = 0;
     char s_user = '\0';
     int player = -1;
+    int centered = 0;
 
-    sf::RenderWindow window(sf::VideoMode(1700, 950), "Go Fish"); 
+    sf::RenderWindow window(sf::VideoMode(1700, 950), "Go Fish");
 
 
 
@@ -34,6 +35,8 @@ int main()
     P3.fillHand(deck);
     AIPlayer P4 = AIPlayer(4);
     P4.fillHand(deck);
+    std::string message = "Welcome to Go Fish";
+    bool flip = false;
 
 
     //sf::RenderWindow window(sf::VideoMode(1000, 1000), "GO Fish");
@@ -157,7 +160,12 @@ int main()
 
         
 
-
+        if (P1.hand.empty() || P2.hand.empty() || P3.hand.empty() || P4.hand.empty())
+        {
+            message = "Game Overs!";
+            flip = true;
+            centered = 35;
+        }
 
         window.clear();
         draw_window(window); // displays the main board with players
@@ -166,20 +174,20 @@ int main()
         draw_user_input_box(window); // displays the user input board
         draw_user_input(window, s_user);  // display user input
         draw_player_input_boxes(window); // display Player choice boxes
-        draw_go_fishing_message(window); // displays for you to go fish
+        draw_go_fishing_message(window, message, centered); // displays for you to go fish
         P1.displayHand(window);
-        P2.displayHand(window);
-        P3.displayHand(window);
-        P4.displayHand(window);
+        P2.displayHand(window, flip);
+        P3.displayHand(window,flip);
+        P4.displayHand(window, flip);
         P1.displayscore(window);
         P2.displayscore(window);
         P3.displayscore(window);
         P4.displayscore(window);
-
-        if (!deck.empty())
-            deckCard.drawBack(window, 1125, 405.5, 0);
         if (!discard.empty())
             discard.top().draw(window, 1565, 650, 0);
+        if (!deck.empty())
+            deckCard.drawBack(window, 1125, 405.5, 0);
+
 
         //if your running on a mac remove the sleep functions
         window.display();  // ouputs the window
@@ -206,7 +214,6 @@ int main()
                     P1.askForCard(P4, card_user,deck, discard);
                     break;
                 }
-                Sleep(100);
                 int selector = std::rand() % 3, selHand;
                 selHand = P2.selectCard();
                 std::cout << "C: " << selHand;
@@ -225,7 +232,7 @@ int main()
                     P2.askForCard(P4, selHand, deck, discard);
                     break;
                 }
-                Sleep(100);
+
                 selector = std::rand() % 3;
                 selHand = P3.selectCard();
                 std::cout << "C: " << selHand;
@@ -244,7 +251,7 @@ int main()
                     P3.askForCard(P4, selHand, deck, discard);
                     break;
                 }
-                Sleep(100);
+
                 selector = std::rand() % 3;
                 selHand = P4.selectCard();
                 std::cout << "C: " << selHand;
@@ -263,7 +270,6 @@ int main()
                     P4.askForCard(P3, selHand, deck, discard);
                     break;
                 }
-                Sleep(100);
                 std::cout << "\n|End of round|\n"; 
                 
 

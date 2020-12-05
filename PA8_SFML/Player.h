@@ -45,7 +45,7 @@ class AIPlayer : public Player
 public:
 	AIPlayer(int pn) : Player(pn) {}
 
-	void displayHand(sf::RenderTarget&);
+	void displayHand(sf::RenderTarget&, bool);
 
 	int selectCard();
 };

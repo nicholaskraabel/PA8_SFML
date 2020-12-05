@@ -64,7 +64,7 @@ void HumanPlayer::displayHand(sf::RenderTarget &window)
 }
 
 
-void AIPlayer::displayHand(sf::RenderTarget& window)
+void AIPlayer::displayHand(sf::RenderTarget& window, bool fliped)
 {
 	//don't know the exact coordinates but it will be something like this
 	float startPt;
@@ -74,21 +74,31 @@ void AIPlayer::displayHand(sf::RenderTarget& window)
 		startPt = (620 - (int)hand.size() * 15) / 2.0 + 140;
 		for (int i = 0; i < hand.size(); i++)
 		{
-			hand[i].draw(window, 1480, startPt + i * 15, 90);
+			if(fliped)
+				hand[i].draw(window, 1480, startPt + i * 15, 90);
+			else
+				hand[i].drawBack(window, 1480, startPt + i * 15, 90);
 		}
 		break;
 	case(3):
 		startPt = (620 - (int)hand.size() * 15) / 2.0 +	950;
 		for (int i = 0; i < hand.size(); i++)
 		{
-			hand[i].draw(window, startPt + (i * 15), 312.5, 180);
+			if(fliped)
+				hand[i].draw(window, startPt + (i * 15), 312.5, 180);
+			else
+				hand[i].drawBack(window, startPt + (i * 15), 312.5, 180);
 		}
 		break;
 	case(2):
 		startPt = (620 - (int)hand.size() * 15) / 2.0 + 140;
 		for (int i = 0; i < hand.size(); i++)
 		{
-			hand[i].draw(window, 1010, startPt + i *15, 90);
+			if(fliped)
+				hand[i].draw(window, 1010, startPt + i *15, 90);
+			else
+				hand[i].drawBack(window, 1010, startPt + i * 15, 90);
+
 		}
 		break;
 	default:
@@ -103,6 +113,7 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 {
 	Card tempHold[4];
 	int tracker = 0, firstIndex = -1;
+
 	for(int i = 0; i < target.hand.size(); i++)
 	{
 		if (target.hand[i].getFaceValue() == card)
@@ -144,16 +155,18 @@ void Player::askForCard(Player& target, int card, std::stack<Card>& deck, std::s
 		std::cout << target.hand[i].getFaceValue() << " ";
 
 	}
-	std::cout << std::endl;
-	for (int i = 0; i < hand.size() - 3; i++)
+	std::cout << "\n\n";
+	int CM[] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	for (int i = 0; i < hand.size(); i++)
 	{
-		if (hand[i].getFaceValue() == hand[i + 1].getFaceValue() && hand[i].getFaceValue() == hand[i + 2].getFaceValue()
-			&& hand[i].getFaceValue() == hand[i + 3].getFaceValue())
-		{
-			scoreCards(hand[i].getFaceValue(), discard);
-		}
+		CM[hand[i].getFaceValue() - 1]++;
 	}
-	
+	for (int i = 0; i < 13; i++)
+	{
+		if (CM[i] == 4)
+			scoreCards(i + 1, discard);
+	}
+		
 }
 
 int AIPlayer::selectCard()
