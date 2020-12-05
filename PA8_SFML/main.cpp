@@ -7,7 +7,23 @@
 #include <time.h>
 #include <cstdlib>
 #include <iostream>
-
+#include "Test.h"
+/**
+ |    Assignment:  PA8
+ |
+ |        Authors:  Nicholas Kraabel, Daniel Clawson, Sebastian Mercado 
+ |                  (fourth person in the group never responsed to the email)
+ |
+ |         Class:  Cpts 122 - Data Structures
+ |
+ |    Instructor:  Nadra Guizani
+ |
+ |Date completed:  12/4/2020
+ |
+ |      Comments: You should reference the instruction set text file for gameplay menchanics
+ |                The test functions run at begining creating each element seperatly at begining in the console
+ |
+ */
 int main()
 {
     int input = 0;
@@ -19,11 +35,19 @@ int main()
     int player = -1;
     int centered = 0;
 
+    //test functions
+    Test test;
+    test.gameDeckTest();
+    test.fillhandTest();
+    test.askTest();
+    test.drawTest();
+    test.shuffleTest();
+
     sf::RenderWindow window(sf::VideoMode(1700, 950), "Go Fish");
 
 
 
-   
+    //creating all the elements
     std::stack<Card> deck, discard;
     Card deckCard = Card(1, 's', "no");
     gameDeck(deck);
@@ -50,9 +74,8 @@ int main()
                 window.close();
         }
 
-        //Go_Fishing = get_go_fish(window);
 
-
+        //Controls
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -154,18 +177,15 @@ int main()
         }
 
 
-        //Stages for go Fish
-          //start of game intailizeing deck shuffle dealing 
-          //ends when deck runs out
-
         
-
+        //checking for game ending condtion
         if (P1.hand.empty() || P2.hand.empty() || P3.hand.empty() || P4.hand.empty())
         {
-            message = "Game Overs!";
+            message = "Game Over!";
             flip = true;
             centered = 35;
         }
+
 
         window.clear();
         draw_window(window); // displays the main board with players
@@ -189,8 +209,9 @@ int main()
             deckCard.drawBack(window, 1125, 405.5, 0);
 
 
-        //if your running on a mac remove the sleep functions
         window.display();  // ouputs the window
+
+        //main game logic
         if (Go_Fishing)
         {
             std::srand(std::time(nullptr));
@@ -198,10 +219,11 @@ int main()
             {
                 std::cout << "You need to select a player and a card" << std::endl;
             }
+
             else
             {
+                //human
                 std::cout << "C: " << card_user << " P: " << player - 1 << std::endl;
-                //Internal game loop backend
                 switch (player)
                 {
                 case(2):
@@ -214,6 +236,8 @@ int main()
                     P1.askForCard(P4, card_user,deck, discard);
                     break;
                 }
+
+                // Ai P1
                 int selector = std::rand() % 3, selHand;
                 selHand = P2.selectCard();
                 std::cout << "C: " << selHand;
@@ -233,6 +257,7 @@ int main()
                     break;
                 }
 
+                //AI P2
                 selector = std::rand() % 3;
                 selHand = P3.selectCard();
                 std::cout << "C: " << selHand;
@@ -252,6 +277,7 @@ int main()
                     break;
                 }
 
+                //AI P3
                 selector = std::rand() % 3;
                 selHand = P4.selectCard();
                 std::cout << "C: " << selHand;
@@ -283,9 +309,6 @@ int main()
 
 
         }
-
-       /* Sleep(100000);
-        window.close();*/
 
     }
 
