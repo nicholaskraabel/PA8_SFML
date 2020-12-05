@@ -152,7 +152,10 @@ void draw_window(sf::RenderTarget& window)
 
 }
 
-
+/*
+Daniel Clawson
+12/1/2020
+*/
 void draw_go_fishing_message(sf::RenderTarget& window, std::string message, int center)
 {
     sf::Font font2;
@@ -173,6 +176,7 @@ void draw_go_fishing_message(sf::RenderTarget& window, std::string message, int 
 
 }
 
+/*We do not use this function*/
 void drawEndWindow(sf::RenderTarget& window, int sc1, int sc2, int sc3, int sc4)
 {
     sf::Font font;
