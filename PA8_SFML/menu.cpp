@@ -59,6 +59,10 @@ void draw_menu(sf::RenderTarget& window)
 }
 
 
+/*
+Daniel Clawson
+12/2/2020
+*/
 void draw_player_input_boxes(sf::RenderTarget& window)
 {
     sf::Font font1;
@@ -112,16 +116,20 @@ void draw_player_input_boxes(sf::RenderTarget& window)
     P3.setPosition(400, 615);
 
 
-    window.draw(rec_red_1);
+    window.draw(rec_red_1); // display 1's blue square.
     window.draw(rec_red_2);
     window.draw(rec_red_3);
 
     window.draw(P1);
-    window.draw(P2);
+    window.draw(P2); // displays P2
     window.draw(P3);
 
 }
 
+/*
+Daniel Clawson
+12/2/2020
+*/
 void draw_user_input_box(sf::RenderTarget& window)
 {
     // user input board
@@ -136,6 +144,10 @@ void draw_user_input_box(sf::RenderTarget& window)
 }
 
 
+/*
+Daniel Clawson
+12/2/2020
+*/
 void draw_user_input(sf::RenderTarget& window, char s_user)
 {
 
@@ -166,7 +178,11 @@ void draw_user_input(sf::RenderTarget& window, char s_user)
 
 
 
-/*Could not get this to return the 1*/
+/*Could not get this to return the 1 so will not use*/
+/*
+Daniel Clawson
+12/2/2020
+*/
 //int get_go_fish(sf::Window& window)
 //{
 //    int mouse_x = 0, mouse_y = 0, Go_Fishing = 0;
